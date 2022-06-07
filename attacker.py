@@ -2,30 +2,7 @@ __author__ = "Abenezer"
 
 from Imports import *
 
-print('''
-AVALIABLE COMMANDS 
-1) shutdown [ usage ] -> shutdown
-2) restart  [ usage ] -> restart
-3) logout   [ usage ] -> logout
-4) download [ usage ] -> download + fileName
-5) upload   [ usage ] -> upload + fileName
-6) kill     [ usage ] -> kill chromium   -> kill + processName
-7) bgps     [ usage ] -> bgps --> for listing all background processes
-8) sysinfo  [ usage ] -> sysinfo --> for getting system's info
-9) exit     [ usage ] -> exit --> for safely exiting the program
-10) encrypt [ usage ] -> encrypt --> Commnd for encrypting directory level files
-11) all system commands like cd,pwd,ls,ls -lia,cat,ifconfig,iwconfig and so on....
 
-COMMING SOON COMMANDS 😂
-
-1) keylogging
-2) webcam
-3) screenshot
-4) wifipass --> command for extracting saved wifi passwords
-5) chrompass --> command for extracting saved passwords from chromium browser
-6) distroy  --> for completly distroying the os
-7) prank
-''')
 
 class Listner:
     def __init__(self, ip, port): 
