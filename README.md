@@ -36,7 +36,6 @@ sudo pip install -r requirements.txt
 10) encrypt [ usage ] -> encrypt --> Commnd for encrypting directory level files
 
 <br>
-<br>
 
 ### Contact :
 <ul>
