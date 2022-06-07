@@ -240,7 +240,7 @@ class Backdoor:
                 resultList = ""
 
                 
-    def __str__(self):
+    def __str__(self) -> str:
         return f'Backdoor'
 
 
