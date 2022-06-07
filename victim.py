@@ -4,7 +4,7 @@ from Imports import *
 
 
 class Encrypto:
-    """A class used to encrypt/decrypt diractory level text files --> (.txt) files only"""
+    """A class for encrypting/decrypting diractory level text files --> (.txt) files only"""
     def __init__(self):
         self.key = Fernet.generate_key()
         self.fernetObject = Fernet(self.key)
