@@ -43,9 +43,6 @@ sudo pip install -r requirements.txt
   <li> Email : walelignabenezer@gmail.com</li>
 </ul>
 
-### Help
-
-* Run the `help` command to find relevant commands to execute on target machine.
 
 ### Disclaimer
 
