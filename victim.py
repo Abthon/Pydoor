@@ -8,7 +8,7 @@ class Encrypto:
     def __init__(self):
         self.key = Fernet.generate_key()
         self.fernetObject = Fernet(self.key)
-        self.ciphterText = "" 
+        self.cipherText = "" 
         self.PlainText = ""
         self.saveKey()
 
