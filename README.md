@@ -16,11 +16,11 @@ sudo pip install -r requirements.txt
 * Executing all linux commands (eg: ifconfig, ls, cd, pwd, & many more)
 * encrypt diractory level files 
 * Get systemInfo of the victim machine
-* see a list of all the background processes
+* see a list of all background processes
 * Kill process by name
 * shutdown,logout & restart a victim machine
-* Upload files to target machine
-* Download files from the target machine
+* Upload files to target(victim) machine
+* Download files from the target(victim) machine
 
 ## Command Usage
 
