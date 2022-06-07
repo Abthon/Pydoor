@@ -36,7 +36,7 @@ class Listner:
         
         
     def send(self,command,conn):
-        """A function for sending command command to the victim machine""" 
+        """A function for sending command to the victim machine""" 
         conn.send(json.dumps(command).encode())
    
     
