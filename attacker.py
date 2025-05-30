@@ -128,6 +128,8 @@ class Listner:
         print("  download <file> - Download a file")
         print("  upload <file>   - Upload a file")
         print("  remove <file>   - Remove a file or directory")
+        print("  keylog start    - Start keylogger")
+        print("  keylog stop     - Stop keylogger and get captured keystrokes")
         print("  shutdown    - Shutdown the system")
         print("  restart     - Restart the system")
         print("  logout      - Logout the user")
@@ -157,6 +159,8 @@ class Listner:
                     print("  download <file> - Download a file")
                     print("  upload <file>   - Upload a file")
                     print("  remove <file>   - Remove a file or directory")
+                    print("  keylog start    - Start keylogger")
+                    print("  keylog stop     - Stop keylogger and get captured keystrokes")
                     print("  shutdown    - Shutdown the system")
                     print("  restart     - Restart the system")
                     print("  logout      - Logout the user")
@@ -219,6 +223,12 @@ class Listner:
                 elif command.split()[0].lower() == "remove" and len(command.split()) > 1:
                     self.remove(command.split()[1])
                     print("file removed successfully!")
+                    
+                elif command.split()[0].lower() == "keylog" and command.split()[1] == "start":
+                    print("Keylogger started")
+                    
+                elif command.split()[0].lower() == "keylog" and command.split()[1] == "stop":
+                    print("Keylogger stopped")
                     
                 else:
                     print(commandresult)

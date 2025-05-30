@@ -1,0 +1,8 @@
+
+=== Keylog Session 2025-05-31 01:31:34 ===
+ [Key.alt_l] 	 [Key.alt_l] 	 [Key.alt_l] 	admin.ethio [Key.ctrl_l] admin.navigo.et
+ [Key.shift] Amiadmin [Key.shift] @navigo.etnavigo [Key.caps_lock]  [Key.ctrl_l]  [Key.ctrl_l]  [Key.caps_lock] navigo1 [Key.shift]  [Key.caps_lock] navi [Key.caps_lock] com	 [Key.alt_l]  [Key.alt_l] 	keylog stop
+
+=== Keylog Session 2025-05-31 01:32:58 ===
+
+ [Key.shift] What are you doin brotha [Key.shift] ! [Key.alt_l] 	 [Key.up]  [Key.up]  [Key.down]  [Key.down] 
