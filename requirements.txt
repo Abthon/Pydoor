@@ -1,2 +1,1 @@
-cryptography==36.0.2
-psutil==5.9.0
+gAAAAABoOigAOOOTXnwEOlBDJLooVAId-H_sHsHsm61FKaiw_ZPGxvRhq5lPGvY2XYe0lBXTdENiIiXv9jWl0Xrx3uFb9WcIn3gZj475eMoDJe1Fs86FHVKtWVFP2-Vl8Bs4zxWnvWKr
